@@ -1,0 +1,28 @@
+// DENTRO DE: dados_veiculos_api.json
+[
+    {
+      "id_unico": "ID_REAL_DO_SEU_VEICULO_1_AQUI",
+      "valor_fipe": "R$ 58.000,00",
+      "recall_pendente": false,
+      "ultima_revisao": "2024-03-01",
+      "dica_manutencao": "Verificar nível do fluido de freio a cada 6 meses.",
+      "link_manual": "https://exemplo.com/manual/modelo-y"
+    },
+    {
+      "id_unico": "ID_REAL_DO_SEU_VEICULO_2_AQUI",
+      "valor_fipe": "R$ 25.000,00",
+      "recall_pendente": false,
+      "ultima_revisao": "2024-04-15",
+      "dica_manutencao": "Inspecionar desgaste dos pneus regularmente.",
+      "link_manual": null
+    },
+    {
+      "id_unico": "ID_REAL_DO_SEU_VEICULO_3_AQUI",
+      "valor_fipe": "R$ 12.000,00",
+      "recall_pendente": true,
+      "recall_descricao": "Ajuste do sistema de iluminação.",
+      "ultima_revisao": "2023-09-20",
+      "dica_manutencao": "Manter a bicicleta limpa e lubrificada.",
+      "link_manual": "https://exemplo.com/manual/bike-x"
+    }
+  ]

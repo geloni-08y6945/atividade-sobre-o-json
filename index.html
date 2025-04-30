@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Garagem Inteligente - Interface Unificada</title>
+    <!-- CSS Principal -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome para Ícones -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+        integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Flatpickr CSS (antes do JS dele) -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <!-- Estilos (Mantidos como antes, mas removi a referência a #configuracao-som se houvesse) -->
+    <style>
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        header, footer {
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            padding: 1em 0;
+        }
+        main {
+            max-width: 960px;
+            margin: 20px auto;
+            padding: 15px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        section {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        section:last-child {
+            border-bottom: none; /* Remove border from last section */
+        }
+        button, input, select, textarea {
+            padding: 8px 12px;
+            margin: 5px 2px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1em;
+        }
+        button {
+            background-color: #5cb85c;
+            color: white;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            opacity: 0.9;
+        }
+        button[data-acao="desligar"],
+        #btnCancelarModificar {
+            background-color: #d9534f; /* Red */
+        }
+        #btnMostrarModificarForm {
+             background-color: #f0ad4e; /* Orange/Yellow */
+             color: #333;
+        }
+        label {
+            display: inline-block; /* Ou block para ficar acima */
+            margin-bottom: 3px;
+            min-width: 120px; /* Alinha um pouco os inputs */
+        }
+        input[type="text"], input[type="number"], input[type="file"], input[type="date"], select, textarea {
+             width: calc(100% - 140px); /* Ajustar conforme necessário */
+             max-width: 300px; /* Limite máximo */
+        }
+        textarea {
+            vertical-align: top; /* Alinha label com topo */
+        }
+        br { display: block; margin-bottom: 5px; } /* Melhora espaçamento */
+
+        /* Container principal de detalhes */
+        #detalhes-veiculo-container {
+            border: 1px solid #ccc;
+            padding: 15px;
+            margin-top: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+        #detalhes-veiculo-container > section {
+             margin-bottom: 20px;
+             padding-bottom: 20px;
+             border-bottom: 1px dashed #ddd;
+        }
+         #detalhes-veiculo-container > section:last-child {
+            border-bottom: none;
+        }
+
+        /* Estilos específicos */
+         .lista-manutencao {
+             max-height: 180px;
+             overflow-y: auto;
+             border: 1px solid #eee;
+             padding: 10px;
+             background-color: #fff;
+             border-radius: 4px;
+             margin-top: 5px;
+         }
+         .lista-manutencao p { margin: 8px 0; font-size: 0.9em; border-bottom: 1px dotted #f0f0f0; padding-bottom: 5px; }
+         .lista-manutencao p:last-child { border-bottom: none; }
+         .tipo-servico { font-weight: bold; color: #337ab7;}
+         .custo-servico { color: #5cb85c; font-weight: bold; }
+         .data-servico { font-style: italic; color: #777; }
+         .descricao-servico { color: #555; font-size: 0.85em; margin-left: 10px; }
+         .status-agendado { color: #f0ad4e; font-weight: bold; }
+
+         .fuel-display, #velocidadeDisplay, #cargaAtualDisplay, #altitudeDisplay, #statusVeiculo {
+            margin: 8px 0; font-size: 0.95em;
+         }
+         .fuel-bar-container {
+             height: 12px; background-color: #e0e0e0; border-radius: 6px;
+             overflow: hidden; margin-top: 3px; width: 120px; display: inline-block;
+             vertical-align: middle; border: 1px solid #ccc;
+         }
+         .fuel-bar { height: 100%; background-color: #4CAF50; width: 0%; transition: width 0.3s ease; }
+         .barra-velocidade { height: 12px; background-color: #e0e0e0; border-radius: 6px; overflow: hidden; margin-top: 3px; width: 120px; display: inline-block; vertical-align: middle; border: 1px solid #ccc; }
+         .progresso-velocidade { height: 100%; background-color: #2196F3; width: 0%; transition: width 0.2s linear; }
+
+         .nickname-display { font-style: italic; color: #555; margin-left: 5px; }
+         .status-veiculo { padding: 3px 8px; border-radius: 4px; color: white; display: inline-block; font-weight: bold; }
+         .status-ligado { background-color: #5cb85c; } /* Green */
+         .status-desligado { background-color: #d9534f; } /* Red */
+         .status-pronta { background-color: #337ab7; } /* Blue */
+
+         /* Estilo para campos específicos escondidos (Container Div) */
+         .campo-especifico { display: none; /* Escondido por padrão */ margin-bottom: 10px; }
+
+        /* Área de Notificação (Adicionada pelo JS) */
+        #notification-area {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 1000;
+            width: 300px;
+        }
+        .notification {
+            background-color: #f0f0f0;
+            color: #333;
+            padding: 10px 15px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            opacity: 1;
+            transition: opacity 0.5s ease-out;
+            cursor: pointer; /* Para indicar que é clicável para fechar */
+        }
+        .notification-success { background-color: #dff0d8; color: #3c763d; border: 1px solid #d6e9c6; }
+        .notification-info { background-color: #d9edf7; color: #31708f; border: 1px solid #bce8f1; }
+        .notification-warning { background-color: #fcf8e3; color: #8a6d3b; border: 1px solid #faebcc; }
+        .notification-error { background-color: #f2dede; color: #a94442; border: 1px solid #ebccd1; }
+
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1><i class="fas fa-warehouse"></i> Garagem Inteligente</h1>
+    </header>
+
+    <main>
+        <section id="selecao-veiculo">
+            <h2>1. Selecione o Tipo de Veículo</h2>
+            <button data-tipo="carro"><i class="fas fa-car"></i> Carro</button>
+            <button data-tipo="esportivo"><i class="fas fa-car-side"></i> Esportivo</button>
+            <button data-tipo="caminhao"><i class="fas fa-truck"></i> Caminhão</button>
+            <button data-tipo="aviao"><i class="fas fa-plane"></i> Avião</button>
+            <button data-tipo="moto"><i class="fas fa-motorcycle"></i> Moto</button>
+            <button data-tipo="bicicleta"><i class="fas fa-bicycle"></i> Bicicleta</button>
+            <div id="tipoSelecionadoInfo" style="margin-top: 10px; font-weight: bold;">Nenhum tipo selecionado.</div>
+        </section>
+
+        <!-- Container para detalhes/criação/modificação -->
+        <div id="detalhes-veiculo-container" style="display: none;"> <!-- JS controla visibilidade -->
+
+            <section id="criar-veiculo">
+                 <h2 id="criarModificarTitulo">Criar Novo Veículo</h2>
+                 <form id="formCriarModificar">
+                     <label for="modelo">Modelo:</label>
+                     <input type="text" id="modelo" required><br>
+                     <label for="cor">Cor:</label>
+                     <input type="text" id="cor" required><br>
+                     <label for="nickname">Apelido (Opcional):</label>
+                     <input type="text" id="nickname"><br>
+                     <label for="imagem">Imagem:</label>
+                     <input type="file" id="imagem" accept="image/*"><br>
+
+                     <div id="campoCapacidadeCarga" class="campo-especifico">
+                         <label for="capacidadeCarga">Capacidade Carga:</label>
+                         <input type="number" id="capacidadeCarga" min="0"><br>
+                     </div>
+                     <div id="campoEnvergadura" class="campo-especifico">
+                         <label for="envergadura">Envergadura (m):</label>
+                         <input type="number" id="envergadura" step="0.1" min="0"><br>
+                     </div>
+                     <div id="campoTipoBicicleta" class="campo-especifico">
+                         <label for="tipoBicicleta">Tipo Bicicleta:</label>
+                         <select id="tipoBicicleta">
+                             <option value="urbana">Urbana</option>
+                             <option value="montanha">Montanha</option>
+                             <option value="estrada">Estrada</option>
+                         </select><br>
+                     </div>
+
+                     <button id="btnCriarVeiculo" type="button">Criar Veículo</button>
+                     <button id="btnCancelarModificar" type="button" style="display: none;">Cancelar Modificação</button>
+                 </form>
+             </section>
+
+             <section id="informacoes-veiculo">
+                 <h2>Informações <span id="nicknameDisplay" class="nickname-display"></span></h2>
+                 <div id="informacoesVeiculo">Nenhum veículo selecionado.</div>
+                 <img id="imagemExibida" src="" alt="Imagem do Veículo" style="display: none; max-width: 200px; margin-top: 10px; border-radius: 5px; border: 1px solid #ddd;">
+                 <div id="statusVeiculo" class="status-veiculo status-desligado">N/A</div>
+                 <div id="velocidadeDisplay">
+                     <i class="fas fa-tachometer-alt"></i> Velocidade: <span id="velocidadeValor">0</span> km/h
+                     <div class="barra-velocidade"><div class="progresso-velocidade" id="progressoVelocidade"></div></div>
+                 </div>
+                 <div id="fuelDisplayContainer" class="fuel-display" style="display: none;">
+                     <i class="fas fa-gas-pump"></i> Combustível: <span id="fuelLevelValor">100</span>%
+                     <div class="fuel-bar-container"><div class="fuel-bar" id="fuelLevelBar"></div></div>
+                 </div>
+                 <div id="cargaAtualDisplay" style="display: none;"><i class="fas fa-weight-hanging"></i> Carga: <span id="cargaAtualValor">0</span></div>
+                 <div id="altitudeDisplay" style="display: none;"><i class="fas fa-arrows-alt-v"></i> Altitude: <span id="altitudeValor">0</span> m</div>
+                  <button id="btnMostrarModificarForm" style="display: none;"><i class="fas fa-edit"></i> Modificar Detalhes</button>
+             </section>
+
+             <section id="acoes-veiculo">
+                 <h2>Ações</h2>
+                 <button data-acao="ligar" title="Ligar Motor"><i class="fas fa-power-off"></i> Ligar</button>
+                 <button data-acao="desligar" title="Desligar Motor"><i class="fas fa-power-off"></i> Desligar</button>
+                 <button data-acao="acelerar" title="Aumentar Velocidade"><i class="fas fa-angle-double-up"></i> Acelerar</button>
+                 <button data-acao="frear" title="Diminuir Velocidade"><i class="fas fa-angle-double-down"></i> Frear</button>
+                 <button data-acao="buzinar" title="Buzinar"><i class="fas fa-bullhorn"></i> Buzinar</button>
+                 <button data-acao="reabastecer" id="btnReabastecer" style="display: none;" title="Encher o tanque"><i class="fas fa-gas-pump"></i> Reabastecer</button>
+                 <button data-acao="turbo" style="display: none;" title="Ativar Nitro"><i class="fas fa-rocket"></i> Turbo</button>
+                 <button data-acao="carregar" id="btnCarregar" style="display: none;" title="Adicionar Carga"><i class="fas fa-plus-circle"></i> Carregar</button>
+                 <button data-acao="descarregar" id="btnDescarregar" style="display: none;" title="Remover Carga"><i class="fas fa-minus-circle"></i> Descarregar</button>
+                 <button data-acao="decolar" id="btnDecolar" style="display: none;" title="Iniciar Voo"><i class="fas fa-plane-departure"></i> Decolar</button>
+                 <button data-acao="aterrissar" id="btnAterrissar" style="display: none;" title="Pousar Avião"><i class="fas fa-plane-arrival"></i> Aterrissar</button>
+             </section>
+
+             <section id="musica-veiculo">
+                 <h2>Música</h2>
+                 <input type="file" id="musicaInput" accept="audio/*">
+                 <button id="btnTocarMusica" title="Tocar/Pausar Música"><i class="fas fa-play"></i> Tocar</button>
+                 <button id="btnPararMusica" title="Parar Música"><i class="fas fa-stop"></i> Parar</button>
+                 <div id="nomeMusica" style="margin-top: 5px; font-style: italic;">Nenhuma música selecionada</div>
+             </section>
+
+             <section id="manutencao-veiculo">
+                 <h2>Manutenção</h2>
+                 <h3>Histórico</h3>
+                 <div id="historicoManutencaoLista" class="lista-manutencao">Nenhum histórico registrado.</div>
+                 <h3>Agendamentos</h3>
+                 <div id="agendamentosFuturosLista" class="lista-manutencao">Nenhum agendamento futuro.</div>
+                 <h3>Registrar / Agendar</h3>
+                 <form id="formAgendarManutencao">
+                     <label for="manutencaoData">Data:</label>
+                     <input type="text" id="manutencaoData" placeholder="Selecione a data..." required><br>
+                     <label for="manutencaoTipo">Tipo Serviço:</label>
+                     <input type="text" id="manutencaoTipo" placeholder="Ex: Troca de óleo" required><br>
+                     <label for="manutencaoCusto">Custo (R$):</label>
+                     <input type="number" id="manutencaoCusto" step="0.01" min="0" placeholder="0.00" required><br>
+                     <label for="manutencaoDescricao">Descrição:</label>
+                     <textarea id="manutencaoDescricao" rows="2" placeholder="(Opcional)"></textarea><br>
+                     <button type="submit">Registrar/Agendar Manutenção</button>
+                 </form>
+             </section>
+
+        </div> <!-- Fim de #detalhes-veiculo-container -->
+
+        <!-- Seção de Configurações Globais REMOVIDA -->
+        <!--
+        <section id="configuracao-som">
+             <h2>Configurações Globais</h2>
+             <label for="volumeGeral">Volume Geral:</label>
+             <input type="range" id="volumeGeral" min="0" max="1" step="0.05" value="0.5" title="Ajusta volume dos sons e música">
+         </section>
+         -->
+
+    </main>
+
+    <footer>
+        <p>© 2024 Garagem Inteligente.</p>
+    </footer>
+
+    <!-- SCRIPTS - ORDEM CORRETA É CRUCIAL -->
+    <!-- SCRIPTS - ORDEM CORRETA É CRUCIAL -->
+
+    <!-- 1. Bibliotecas Externas -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <!-- 2. Localização da Biblioteca (DEPOIS da lib principal) -->
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/pt.js"></script>
+
+    <!-- 3. Constantes Globais (precisa vir ANTES dos scripts que as usam) -->
+    <script src="js/constants.js"></script>  <!-- <<<<< VERIFIQUE ESTE ARQUIVO E CAMINHO -->
+
+    <!-- 4. Classes Base -->
+    <script src="js/Manutencao.js"></script>
+    <script src="js/Veiculo.js"></script>
+
+    <!-- 5. Classes Derivadas Diretas de Veiculo -->
+    <script src="js/Carro.js"></script>
+    <script src="js/Caminhao.js"></script>
+    <script src="js/Aviao.js"></script>
+    <script src="js/Moto.js"></script>
+    <script src="js/Bicicleta.js"></script>
+
+    <!-- 6. Classes Derivadas de outras classes -->
+    <script src="js/CarroEsportivo.js"></script> <!-- DEPOIS de Carro.js -->
+
+    <!-- 7. Script Principal (DEPOIS de todas as dependências) -->
+    <script src="js/principal.js"></script>
+
+</body>
+</html>

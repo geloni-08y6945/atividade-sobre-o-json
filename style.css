@@ -1,0 +1,445 @@
+/* style.css - Versão Mais Chamativa */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap'); /* Importa uma fonte mais moderna */
+
+:root {
+  /* Nova Paleta de Cores Vibrantes */
+  --primary-color: #007BFF; /* Azul Elétrico */
+  --primary-darker: #0056b3;
+  --secondary-color: #E91E63; /* Rosa/Magenta */
+  --secondary-darker: #c2185b;
+  --accent-color: #FFEB3B; /* Amarelo Vibrante */
+  --accent-darker: #fdd835;
+  --background-color: #f0f2f5; /* Fundo Cinza Muito Claro */
+  --section-bg: #ffffff; /* Seções Brancas */
+  --text-color: #333; /* Texto Principal Escuro */
+  --text-light: #f8f9fa; /* Texto Claro (para fundos escuros) */
+  --border-color: #e0e0e0; /* Borda Sutil */
+  --shadow-color: rgba(0, 0, 0, 0.15);
+  --shadow-hover-color: rgba(0, 0, 0, 0.25);
+  --success-color: #28a745;
+  --danger-color: #dc3545;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+  font-family: 'Poppins', sans-serif; /* Usa a nova fonte */
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+header {
+  background: linear-gradient(90deg, var(--primary-color) 0%, var(--primary-darker) 100%); /* Gradiente */
+  color: var(--text-light);
+  text-align: center;
+  padding: 2em 1em; /* Mais padding */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px; /* Espaço abaixo do header */
+  border-bottom: 4px solid var(--accent-color); /* Linha de destaque */
+}
+
+header h1 {
+    font-weight: 700;
+    font-size: 2.5em; /* Tamanho maior */
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+}
+
+main {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px; /* Espaço entre seções */
+}
+
+section {
+  background-color: var(--section-bg);
+  border-radius: 12px; /* Bordas mais arredondadas */
+  padding: 30px; /* Mais padding interno */
+  box-shadow: 0 5px 15px var(--shadow-color);
+  width: 95%;
+  max-width: 700px; /* Aumenta a largura máxima */
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+  border-left: 5px solid var(--primary-color); /* Barra lateral colorida */
+}
+
+section:hover {
+  transform: translateY(-5px) scale(1.01); /* Efeito de levantar e ampliar */
+  box-shadow: 0 8px 20px var(--shadow-hover-color);
+}
+
+section h2 {
+  color: var(--primary-color);
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 3px solid var(--accent-color); /* Destaque amarelo */
+  padding-bottom: 10px;
+  font-weight: 600;
+  font-size: 1.8em; /* Maior */
+  text-align: center;
+}
+
+section h3 { /* Estilo para os subtítulos de Manutenção */
+    color: var(--secondary-color);
+    margin-top: 25px;
+    margin-bottom: 15px;
+    border-bottom: 1px dashed var(--secondary-color);
+    padding-bottom: 8px;
+    font-weight: 500;
+    font-size: 1.4em;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500; /* Mais peso */
+  color: #555;
+  font-size: 0.95em;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="file"],
+input[type="range"],
+input[type="date"], /* Estilo para input date */
+select,
+textarea { /* Estilo para textarea */
+  width: 100%;
+  padding: 12px 15px; /* Mais padding */
+  margin-bottom: 18px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  box-sizing: border-box;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  font-size: 1em;
+  background-color: #fdfdfd; /* Fundo levemente diferente */
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="file"]:focus,
+input[type="range"]:focus,
+input[type="date"]:focus,
+select:focus,
+textarea:focus {
+  border-color: var(--primary-color); /* Borda azul no foco */
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2); /* Glow azul */
+}
+
+input[type="file"] {
+    padding: 8px; /* Ajuste específico para file input */
+}
+
+/* --- Botões --- */
+button {
+  background: linear-gradient(45deg, var(--primary-color) 0%, var(--primary-darker) 100%);
+  color: var(--text-light);
+  border: none;
+  padding: 12px 25px; /* Mais padding horizontal */
+  margin: 8px 5px; /* Ajusta margem */
+  border-radius: 25px; /* Bordas bem arredondadas (pílula) */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px var(--shadow-color);
+  font-weight: 600; /* Mais peso */
+  text-transform: uppercase; /* Caixa alta */
+  letter-spacing: 0.5px; /* Espaçamento leve */
+  display: inline-flex; /* Para alinhar ícones */
+  align-items: center;
+  justify-content: center;
+  gap: 8px; /* Espaço entre ícone e texto */
+}
+
+button i { /* Estilo para ícones dentro dos botões */
+    font-size: 1.1em; /* Ligeiramente maior */
+}
+
+button:hover {
+  background: linear-gradient(45deg, var(--secondary-color) 0%, var(--secondary-darker) 100%); /* Muda para gradiente secundário no hover */
+  transform: translateY(-3px) scale(1.03); /* Efeito mais pronunciado */
+  box-shadow: 0 6px 12px var(--shadow-hover-color);
+}
+
+button:active {
+  transform: translateY(0) scale(1);
+  box-shadow: 0 2px 4px var(--shadow-color);
+}
+
+/* Botões Específicos */
+#btnCriarVeiculo {
+  background: linear-gradient(45deg, var(--accent-color) 0%, var(--accent-darker) 100%);
+  color: var(--text-color); /* Texto escuro para contraste com amarelo */
+}
+#btnCriarVeiculo:hover {
+  background: linear-gradient(45deg, var(--accent-darker) 0%, var(--accent-color) 100%); /* Inverte gradiente no hover */
+}
+
+#formAgendarManutencao button {
+   background: linear-gradient(45deg, var(--secondary-color) 0%, var(--secondary-darker) 100%);
+}
+#formAgendarManutencao button:hover {
+   background: linear-gradient(45deg, var(--primary-color) 0%, var(--primary-darker) 100%); /* Troca para primário no hover */
+}
+
+/* Botões de Seleção de Veículo */
+#selecao-veiculo button {
+    border-radius: 8px; /* Menos arredondado */
+    background: var(--section-bg);
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    box-shadow: none;
+    text-transform: none; /* Sem caixa alta */
+    font-weight: 500;
+}
+#selecao-veiculo button:hover {
+    background: var(--primary-color);
+    color: var(--text-light);
+    transform: translateY(-2px);
+     box-shadow: 0 4px 8px rgba(0, 123, 255, 0.2);
+}
+
+
+/* --- Informações do Veículo --- */
+#informacoes-veiculo {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: #e9f5ff; /* Fundo azul bem claro */
+  text-align: center;
+}
+
+#imagemExibida {
+  max-width: 90%; /* Imagem ocupa mais espaço */
+  max-height: 250px; /* Limita altura máxima */
+  height: auto;
+  border-radius: 8px;
+  margin: 15px auto;
+  border: 3px solid var(--text-light); /* Borda branca */
+  box-shadow: 0 4px 10px var(--shadow-color);
+  display: block; /* Garante que margem auto funcione */
+}
+
+/* Status do veículo (Badge Style) */
+#statusVeiculo {
+    display: inline-block; /* Para aplicar padding e border-radius */
+    padding: 6px 15px;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 0.9em;
+    margin-top: 10px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.status-ligado {
+  background-color: var(--success-color); /* Verde */
+  box-shadow: 0 0 8px rgba(40, 167, 69, 0.5);
+}
+
+.status-desligado {
+  background-color: var(--danger-color); /* Vermelho */
+   box-shadow: 0 0 8px rgba(220, 53, 69, 0.5);
+}
+/* Classe para status da bicicleta (opcional) */
+.status-pronta {
+    background-color: var(--info-color); /* Azul claro info */
+    box-shadow: 0 0 8px rgba(23, 162, 184, 0.5);
+}
+
+/* Display de Velocidade, Carga, Altitude */
+#velocidadeDisplay,
+#cargaAtualDisplay,
+#altitudeDisplay {
+  margin-top: 15px;
+  font-size: 1.3em; /* Maior */
+  font-weight: 600;
+  color: var(--primary-darker);
+}
+#velocidadeDisplay span,
+#cargaAtualDisplay span,
+#altitudeDisplay span {
+    color: var(--secondary-color); /* Valor destacado em rosa */
+    margin-left: 5px;
+}
+
+/* Barra de Progresso (Velocidade) */
+.barra-velocidade {
+  width: 100%;
+  height: 25px; /* Mais alta */
+  background-color: #e9ecef; /* Fundo da barra */
+  border-radius: 25px;
+  margin-top: 8px;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra interna */
+}
+
+.progresso-velocidade {
+  height: 100%;
+  width: 0%; /* Começa em 0 */
+  background: linear-gradient(90deg, var(--secondary-darker) 0%, var(--secondary-color) 100%); /* Gradiente rosa */
+  border-radius: 25px;
+  transition: width 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55); /* Transição elástica */
+  box-shadow: inset 0 -2px 4px rgba(0, 0, 0, 0.2); /* Sombra interna para profundidade */
+}
+
+/* Seção de Música */
+#musica-veiculo {
+  text-align: center;
+}
+
+#musica-veiculo input[type="file"] {
+  margin-bottom: 15px;
+  border: 1px dashed var(--primary-color); /* Borda tracejada */
+  padding: 15px;
+}
+
+#nomeMusica {
+    margin-top: 15px;
+    font-style: italic;
+    color: #555;
+}
+
+/* Seção de Manutenção */
+.lista-manutencao {
+  background-color: #f8f9fa; /* Fundo um pouco diferente */
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 15px;
+  min-height: 60px;
+}
+
+.lista-manutencao p {
+  margin: 10px 0;
+  padding: 10px;
+  border-bottom: 1px solid #eee;
+  display: flex; /* Flex para alinhar melhor */
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap; /* Permite quebrar linha em telas menores */
+}
+
+.lista-manutencao p:last-child {
+  border-bottom: none;
+}
+
+.lista-manutencao span.tipo-servico {
+  font-weight: 600; /* Mais destaque */
+  color: var(--primary-color);
+}
+
+.lista-manutencao span.custo-servico {
+  font-weight: 500;
+  color: var(--success-color); /* Custo em verde */
+  font-size: 0.95em;
+  white-space: nowrap; /* Evita quebrar o custo */
+  margin-left: 10px; /* Espaço à esquerda */
+}
+
+/* Formulário de Agendamento */
+#formAgendarManutencao {
+    margin-top: 20px;
+}
+
+
+/* Footer */
+footer {
+  text-align: center;
+  padding: 1.5em 1em;
+  margin-top: 30px; /* Mais espaço acima do footer */
+  background: linear-gradient(90deg, var(--primary-darker) 0%, var(--primary-color) 100%); /* Gradiente invertido do header */
+  color: var(--text-light);
+  box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  font-size: 0.9em;
+}
+
+/* Responsividade (Exemplo simples) */
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 2em;
+  }
+  section {
+    padding: 20px;
+  }
+  section h2 {
+    font-size: 1.5em;
+  }
+  button {
+    padding: 10px 20px;
+    font-size: 0.9em;
+  }
+   .lista-manutencao p {
+      flex-direction: column; /* Empilha itens em telas pequenas */
+      align-items: flex-start;
+  }
+   .lista-manutencao span.custo-servico {
+       margin-left: 0;
+       margin-top: 5px;
+   }
+}/* --- Notification Styles --- */
+#notification-area {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1050; /* Ensure it's above other content */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end; /* Align notifications to the right */
+}
+
+.notification {
+  background-color: #333;
+  color: white;
+  padding: 10px 15px;
+  margin-top: 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  opacity: 1;
+  transition: opacity 0.5s ease-out;
+  min-width: 200px; /* Minimum width */
+  max-width: 400px; /* Prevent very wide notifications */
+  font-size: 0.9em;
+}
+
+.notification-success {
+  background-color: #4CAF50; /* Green */
+}
+
+.notification-info {
+  background-color: #2196F3; /* Blue */
+}
+
+.notification-warning {
+  background-color: #ff9800; /* Orange */
+  color: #333;
+}
+
+.notification-error {
+  background-color: #f44336; /* Red */
+}
+
+/* --- Other Style Refinements --- */
+/* (Keep your existing styles) */
+
+/* Add small margin below image input label */
+#criar-veiculo label[for="imagem"] {
+  margin-bottom: 5px;
+  display: inline-block; /* Or block if needed */
+}
+/* Style for image modification help text */
+#image-help-text {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 5px;
+}
